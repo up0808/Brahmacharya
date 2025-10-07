@@ -1,0 +1,7 @@
+{
+  "name": "prabhu-naam-jaap",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node generate-env.js"
+  }
+}
