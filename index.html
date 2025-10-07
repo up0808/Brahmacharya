@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prabhu Naam Jaap</title>
+  <style>
+    /* Modern CSS Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #ff6b35;
+      --primary-dark: #e85a2a;
+      --secondary: #f7931e;
+      --bg: #fafafa;
+      --card-bg: #ffffff;
+      --text: #2d3436;
+      --text-light: #636e72;
+      --border: #e0e0e0;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+      --radius: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header */
+    .header {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .user-avatar:hover {
+      border-color: var(--primary);
+      transform: scale(1.05);
+    }
+
+    .user-name {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      min-width: 180px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: var(--transition);
+      z-index: 100;
+    }
+
+    .profile-dropdown.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .dropdown-item:first-child {
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .dropdown-item:last-child {
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+
+    .dropdown-item:hover {
+      background: var(--bg);
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: #f0f0f0;
+    }
+
+    /* Auth Section */
+    .auth-section {
+      text-align: center;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 48px 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .auth-section h1 {
+      font-size: 32px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .auth-section p {
+      color: var(--text-light);
+      margin-bottom: 32px;
+      font-size: 16px;
+    }
+
+    /* Add Counter Form */
+    .add-counter-form {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .form-input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* Counters Grid */
+    .counters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .counter-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .counter-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .counter-card h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .counter-card .count {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .counter-actions {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      background: var(--bg);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      font-size: 16px;
+    }
+
+    .icon-btn:hover {
+      background: var(--border);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      animation: modalIn 0.3s ease-out;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-light);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover {
+      background: var(--bg);
+    }
+
+    .modal-title {
+      font-size: 28px;
+      margin-bottom: 32px;
+      color: var(--text);
+    }
+
+    .counter-display {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .counter-display:hover {
+      transform: scale(1.05);
+    }
+
+    .counter-display:active {
+      transform: scale(0.95);
+    }
+
+    .empty-state {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 48px 24px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .empty-state p {
+      color: var(--text-light);
+      font-size: 16px;
+    }
+
+    .error {
+      background: #fee;
+      color: #c33;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .nav-link {
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      transition: var(--transition);
+      font-size: 14px;
+    }
+
+    .nav-link:hover {
+      background: var(--bg);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .counters-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .counter-display {
+        width: 160px;
+        height: 160px;
+        font-size: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">🙏 Prabhu Naam Jaap</div>
+      <div id="userSection" class="hidden">
+        <div class="user-info">
+          <div class="nav-links">
+            <a href="profilelist.html" class="nav-link">Rankings</a>
+          </div>
+          <img id="userAvatar" class="user-avatar" alt="User" title="Profile Menu">
+          <div id="profileDropdown" class="profile-dropdown">
+            <button class="dropdown-item" id="viewProfileBtn">
+              <span>👤</span> View Profile
+            </button>
+            <button class="dropdown-item" id="signOutBtn">
+              <span>🚪</span> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auth Section (shown when not logged in) -->
+    <div id="authSection" class="auth-section">
+      <h1>Welcome to Prabhu Naam Jaap</h1>
+      <p>Track your devotional chanting with personalized counters</p>
+      <button id="googleSignInBtn" class="btn btn-primary">
+        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Sign in with Google
+      </button>
+      <!-- Google One-Tap will appear here -->
+      <div id="g_id_onload"
+           data-client_id="PLACEHOLDER"
+           data-callback="handleOneTapSignIn"
+           data-auto_prompt="true">
+      </div>
+    </div>
+
+    <!-- Main App (shown when logged in) -->
+    <div id="appSection" class="hidden">
+      <!-- Add Counter Form -->
+      <div class="add-counter-form">
+        <div class="form-group">
+          <input 
+            type="text" 
+            id="deityInput" 
+            class="form-input" 
+            placeholder="Enter deity name (e.g., Krishna, Shiva, Ram)"
+            maxlength="40"
+          >
+          <button id="addCounterBtn" class="btn btn-primary">Add Counter</button>
+        </div>
+        <div id="errorMsg" class="error hidden"></div>
+      </div>
+
+      <!-- Counters Grid -->
+      <div id="countersGrid" class="counters-grid"></div>
+      
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state hidden">
+        <p>No counters yet. Add your first deity counter above! 🙏</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Counter Modal -->
+  <div id="counterModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal">&times;</button>
+      <h2 class="modal-title" id="modalDeityName"></h2>
+      <div 
+        id="counterDisplay" 
+        class="counter-display" 
+        role="button" 
+        tabindex="0"
+        aria-label="Increment counter"
+      >0</div>
+      <p style="color: var(--text-light); font-size: 14px;">Tap to increment</p>
+    </div>
+  </div>
+
+  <!-- Load environment variables first -->
+  <script src="env.js"></script>
+
+  <!-- Firebase SDK (v9+ modular) -->
+  <script type="module">
+    // ============================================
+    // FIREBASE CONFIGURATION FROM ENV VARS
+    // ============================================
+    // Read configuration from window.__ENV__ (populated by env.js)
+    // If env.js is missing or incomplete, show clear error message
+    
+    if (!window.__ENV__) {
+      document.body.innerHTML = `
+        <div style="max-width: 600px; margin: 100px auto; padding: 40px; background: white; border-radius: 12px; text-align: center;">
+          <h2 style="color: #e74c3c; margin-bottom: 20px;">⚠️ Configuration Missing</h2>
+          <p style="margin-bottom: 16px;">Environment variables not found. Please configure Firebase credentials.</p>
+          <p style="font-size: 14px; color: #7f8c8d;">
+            Required: VERCEL_PUBLIC_FIREBASE_* variables in Vercel Project Settings.
+            See HTML comments for setup instructions.
+          </p>
+        </div>
+      `;
+      throw new Error('Environment variables not configured');
+    }
+
+    const firebaseConfig = {
+      apiKey: window.__ENV__.FIREBASE_API_KEY,
+      authDomain: window.__ENV__.FIREBASE_AUTH_DOMAIN,
+      projectId: window.__ENV__.FIREBASE_PROJECT_ID,
+      storageBucket: window.__ENV__.FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: window.__ENV__.FIREBASE_MESSAGING_SENDER_ID,
+      appId: window.__ENV__.FIREBASE_APP_ID,
+      measurementId: window.__ENV__.FIREBASE_MEASUREMENT_ID
+    };
+
+    const GOOGLE_CLIENT_ID = window.__ENV__.GOOGLE_OAUTH_CLIENT_ID;
+
+    // Update One-Tap div with actual client ID
+    document.getElementById('g_id_onload').setAttribute('data-client_id', GOOGLE_CLIENT_ID);
+
+    // ============================================
+    // FIREBASE IMPORTS
+    // ============================================
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { 
+      getAuth, 
+      GoogleAuthProvider, 
+      signInWithPopup, 
+      signInWithCredential,
+      signOut,
+      onAuthStateChanged 
+    } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+    import { 
+      getFirestore, 
+      collection, 
+      doc, 
+      setDoc, 
+      getDoc,
+      getDocs,
+      updateDoc,
+      deleteDoc,
+      query,
+      orderBy,
+      serverTimestamp,
+      runTransaction
+    } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    // ============================================
+    // INITIALIZE FIREBASE
+    // ============================================
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    // ============================================
+    // STATE MANAGEMENT
+    // ============================================
+    let currentUser = null;
+    let counters = {};
+    let activeCounterId = null;
+
+    // ============================================
+    // DOM ELEMENTS
+    // ============================================
+    const authSection = document.getElementById('authSection');
+    const appSection = document.getElementById('appSection');
+    const userSection = document.getElementById('userSection');
+    const googleSignInBtn = document.getElementById('googleSignInBtn');
+    const signOutBtn = document.getElementById('signOutBtn');
+    const userAvatar = document.getElementById('userAvatar');
+    const profileDropdown = document.getElementById('profileDropdown');
+    const viewProfileBtn = document.getElementById('viewProfileBtn');
+    const deityInput = document.getElementById('deityInput');
+    const addCounterBtn = document.getElementById('addCounterBtn');
+    const countersGrid = document.getElementById('countersGrid');
+    const emptyState = document.getElementById('emptyState');
+    const errorMsg = document.getElementById('errorMsg');
+    const counterModal = document.getElementById('counterModal');
+    const modalDeityName = document.getElementById('modalDeityName');
+    const counterDisplay = document.getElementById('counterDisplay');
+    const closeModal = document.getElementById('closeModal');
+
+    // ============================================
+    // AUTHENTICATION
+    // ============================================
+    
+    // Google Sign-In Button Click Handler
+    googleSignInBtn.addEventListener('click', async () => {
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (error) {
+        console.error('Sign-in error:', error);
+        showError('Failed to sign in. Please try again.');
+      }
+    });
+
+    // Sign Out Handler
+    signOutBtn.addEventListener('click', async () => {
+      try {
+        await signOut(auth);
+        profileDropdown.classList.remove('active');
+      } catch (error) {
+        console.error('Sign-out error:', error);
+        showError('Failed to sign out.');
+      }
+    });
+
+    // Profile dropdown toggle
+    userAvatar.addEventListener('click', (e) => {
+      e.stopPropagation();
+      profileDropdown.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+      profileDropdown.classList.remove('active');
+    });
+
+    // View Profile button
+    viewProfileBtn.addEventListener('click', () => {
+      window.location.href = 'profile.html';
+    });
+
+    // Google One-Tap Sign-In Handler
+    // This function is called by Google Identity Services when user completes One-Tap
+    window.handleOneTapSignIn = async (response) => {
+      try {
+        // Exchange the Google ID token for Firebase credentials
+        const credential = GoogleAuthProvider.credential(response.credential);
+        await signInWithCredential(auth, credential);
+      } catch (error) {
+        console.error('One-Tap sign-in error:', error);
+      }
+    };
+
+    // Auth State Observer
+    // Monitors authentication state changes and updates UI accordingly
+    onAuthStateChanged(auth, async (user) => {
+      currentUser = user;
+      
+      if (user) {
+        // User is signed in
+        authSection.classList.add('hidden');
+        appSection.classList.remove('hidden');
+        userSection.classList.remove('hidden');
+        
+        // Update user info display
+        userAvatar.src = user.photoURL || 'https://via.placeholder.com/40';
+        userAvatar.alt = user.displayName || 'User';
+        
+        // Initialize user profile if doesn't exist
+        await initializeUserProfile();
+        
+        // Load user's counters from Firestore
+        await loadCounters();
+      } else {
+        // User is signed out
+        authSection.classList.remove('hidden');
+        appSection.classList.add('hidden');
+        userSection.classList.add('hidden');
+        
+        // Clear local state
+        counters = {};
+        renderCounters();
+      }
+    });
+
+    // ============================================
+    // PROFILE INITIALIZATION
+    // ============================================
+    
+    // Initialize user profile document if it doesn't exist
+    async function initializeUserProfile() {
+      if (!currentUser) return;
+      
+      try {
+        const profileRef = doc(db, 'users', currentUser.uid, 'profile', 'data');
+        const profileSnap = await getDoc(profileRef);
+        
+        if (!profileSnap.exists()) {
+          // Create initial profile
+          const initialProfile = {
+            displayName: currentUser.displayName || 'Anonymous',
+            spiritualName: '',
+            avatarUrl: currentUser.photoURL || '',
+            age: null,
+            location: '',
+            guruName: '',
+            initiationDate: '',
+            dailyRoutine: '',
+            vows: '',
+            favouriteDeity: '',
+            biography: '',
+            badges: [],
+            profilePublic: false,
+            highestNaamJaapCount: 0,
+            topDeityName: '',
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          };
+          
+          await setDoc(profileRef, initialProfile);
+        }
+      } catch (error) {
+        console.error('Error initializing profile:', error);
+      }
+    }
+
+    // ============================================
+    // FIRESTORE OPERATIONS
+    // ============================================
+    
+    // Load all counters for the current user
+    async function loadCounters() {
+      if (!currentUser) return;
+      
+      try {
+        const countersRef = collection(db, 'users', currentUser.uid, 'counters');
+        const q = query(countersRef, orderBy('createdAt', 'asc'));
+        const snapshot = await getDocs(q);
+        
+        counters = {};
+        snapshot.forEach(doc => {
+          counters[doc.id] = {
+            id: doc.id,
+            ...doc.data()
+          };
+        });
+        
+        renderCounters();
+      } catch (error) {
+        console.error('Error loading counters:', error);
+        showError('Failed to load counters.');
+      }
+    }
+
+    // Add a new counter
+    async function addCounter(name) {
+      if (!currentUser) return;
+      
+      // Validate input
+      const trimmedName = name.trim();
+      if (!trimmedName) {
+        showError('Please enter a deity name.');
+        return;
+      }
+      
+      if (trimmedName.length > 40) {
+        showError('Name must be 40 characters or less.');
+        return;
+      }
+      
+      // Check for duplicates (case-insensitive)
+      const normalizedName = trimmedName.toLowerCase();
+      const isDuplicate = Object.values(counters).some(
+        counter => counter.name.toLowerCase() === normalizedName
+      );
+      
+      if (isDuplicate) {
+        showError('A counter with this name already exists. Try adding a suffix like "Krishna-morning".');
+        return;
+      }
+      
+      try {
+        // Create URL-safe slug for document ID
+        const slug = trimmedName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+        const timestamp = Date.now();
+        const counterId = `${slug}-${timestamp}`;
+        
+        const counterData = {
+          name: trimmedName,
+          count: 0,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        };
+        
+        // Save to Firestore
+        const counterRef = doc(db, 'users', currentUser.uid, 'counters', counterId);
+        await setDoc(counterRef, counterData);
+        
+        // Update local state
+        counters[counterId] = {
+          id: counterId,
+          ...counterData,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        };
+        
+        renderCounters();
+        deityInput.value = '';
+        hideError();
+      } catch (error) {
+        console.error('Error adding counter:', error);
+        showError('Failed to add counter. Please try again.');
+      }
+    }
+
+    // Increment counter with transaction to update profile if new highest
+    async function incrementCounter(counterId) {
+      if (!currentUser || !counters[counterId]) return;
+      
+      const counter = counters[counterId];
+      const newCount = counter.count + 1;
+      
+      // Optimistic update
+      counters[counterId].count = newCount;
+      counterDisplay.textContent = newCount;
+      
+      try {
+        // Use transaction to atomically update counter and profile if needed
+        await runTransaction(db, async (transaction) => {
+          const counterRef = doc(db, 'users', currentUser.uid, 'counters', counterId);
+          const profileRef = doc(db, 'users', currentUser.uid, 'profile', 'data');
+          
+          const profileSnap = await transaction.get(profileRef);
+          
+          // Update counter
+          transaction.update(counterRef, {
+            count: newCount,
+            updatedAt: serverTimestamp()
+          });
+          
+          // Update profile if this is new highest
+          if (profileSnap.exists()) {
+            const currentHighest = profileSnap.data().highestNaamJaapCount || 0;
+            if (newCount > currentHighest) {
+              transaction.update(profileRef, {
+                highestNaamJaapCount: newCount,
+                topDeityName: counter.name,
+                updatedAt: serverTimestamp()
+              });
+            }
+          }
+        });
+        
+      } catch (error) {
+        console.error('Error incrementing counter:', error);
+        // Rollback on failure
+        counters[counterId].count = newCount - 1;
+        counterDisplay.textContent = newCount - 1;
+        showError('Failed to save. Please check your connection.');
+      }
+    }
+
+    // Delete counter
+    async function deleteCounter(counterId) {
+      if (!currentUser || !counters[counterId]) return;
+      
+      const counter = counters[counterId];
+      if (!confirm(`Delete "${counter.name}" counter?`)) return;
+      
+      try {
+        // Delete from Firestore
+        const counterRef = doc(db, 'users', currentUser.uid, 'counters', counterId);
+        await deleteDoc(counterRef);
+        
+        // Update local state
+        delete counters[counterId];
+        renderCounters();
+        
+        // Close modal if this counter is active
+        if (activeCounterId === counterId) {
+          closeCounterModal();
+        }
+        
+        // Recalculate highest if needed
+        await recalculateHighest();
+      } catch (error) {
+        console.error('Error deleting counter:', error);
+        showError('Failed to delete counter.');
+      }
+    }
+
+    // Recalculate highest count across all counters
+    async function recalculateHighest() {
+      if (!currentUser) return;
+      
+      try {
+        let highest = 0;
+        let topDeity = '';
+        
+        Object.values(counters).forEach(counter => {
+          if (counter.count > highest) {
+            highest = counter.count;
+            topDeity = counter.name;
+          }
+        });
+        
+        const profileRef = doc(db, 'users', currentUser.uid, 'profile', 'data');
+        await updateDoc(profileRef, {
+          highestNaamJaapCount: highest,
+          topDeityName: topDeity,
+          updatedAt: serverTimestamp()
+        });
+      } catch (error) {
+        console.error('Error recalculating highest:', error);
+      }
+    }
+
+    // ============================================
+    // UI RENDERING
+    // ============================================
+    
+    function renderCounters() {
+      const counterIds = Object.keys(counters);
+      
+      if (counterIds.length === 0) {
+        countersGrid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      
+      emptyState.classList.add('hidden');
+      
+      countersGrid.innerHTML = counterIds.map(id => {
+        const counter = counters[id];
+        return `
+          <div class="counter-card" data-id="${id}">
+            <div class="counter-actions">
+              <button class="icon-btn delete-btn" data-id="${id}" title="Delete">🗑️</button>
+            </div>
+            <h3>${escapeHtml(counter.name)}</h3>
+            <div class="count">${counter.count}</div>
+          </div>
+        `;
+      }).join('');
+      
+      // Attach event listeners
+      document.querySelectorAll('.counter-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (!e.target.classList.contains('delete-btn')) {
+            openCounterModal(card.dataset.id);
+          }
+        });
+      });
+      
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          deleteCounter(btn.dataset.id);
+        });
+      });
+    }
+
+    // ============================================
+    // MODAL MANAGEMENT
+    // ============================================
+    
+    function openCounterModal(counterId) {
+      activeCounterId = counterId;
+      const counter = counters[counterId];
+      
+      if (!counter) return;
+      
+      modalDeityName.textContent = counter.name;
+      counterDisplay.textContent = counter.count;
+      counterModal.classList.add('active');
+    }
+
+    function closeCounterModal() {
+      counterModal.classList.remove('active');
+      activeCounterId = null;
+      renderCounters(); // Refresh to show updated counts
+    }
+
+    // Counter display click handler
+    counterDisplay.addEventListener('click', () => {
+      if (activeCounterId) {
+        incrementCounter(activeCounterId);
+      }
+    });
+
+    // Keyboard accessibility for counter
+    counterDisplay.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        if (activeCounterId) {
+          incrementCounter(activeCounterId);
+        }
+      }
+    });
+
+    // Close modal handlers
+    closeModal.addEventListener('click', closeCounterModal);
+    counterModal.addEventListener('click', (e) => {
+      if (e.target === counterModal) {
+        closeCounterModal();
+      }
+    });
+
+    // ============================================
+    // EVENT LISTENERS
+    // ============================================
+    
+    addCounterBtn.addEventListener('click', () => {
+      addCounter(deityInput.value);
+    });
+
+    deityInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addCounter(deityInput.value);
+      }
+    });
+
+    // ============================================
+    // UTILITY FUNCTIONS
+    // ============================================
+    
+    function showError(message) {
+      errorMsg.textContent = message;
+      errorMsg.classList.remove('hidden');
+      setTimeout(() => hideError(), 5000);
+    }
+
+    function hideError() {
+      errorMsg.classList.add('hidden');
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ============================================
+    // LOAD GOOGLE ONE-TAP SCRIPT
+    // ============================================
+    // Load Google Identity Services library for One-Tap
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  </script>
+</body>
+</html>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════════
+  PRABHU NAAM JAAP COUNTER - SETUP INSTRUCTIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 VERCEL ENVIRONMENT VARIABLES SETUP:
+
+1. In Vercel Dashboard, go to your project > Settings > Environment Variables
+2. Add the following variables (use "Production", "Preview", and "Development"):
+
+   VERCEL_PUBLIC_FIREBASE_API_KEY
+   VERCEL_PUBLIC_FIREBASE_AUTH_DOMAIN
+   VERCEL_PUBLIC_FIREBASE_PROJECT_ID
+   VERCEL_PUBLIC_FIREBASE_STORAGE_BUCKET
+   VERCEL_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+   VERCEL_PUBLIC_FIREBASE_APP_ID
+   VERCEL_PUBLIC_FIREBASE_MEASUREMENT_ID
+   VERCEL_PUBLIC_GOOGLE_OAUTH_CLIENT_ID
+
+3. Create env.js file generator:
+   
+   Create a file called generate-env.js in your project root:
+
+   ```javascript
+   const fs = require('fs');
+   
+   const envContent = `
+   window.__ENV__ = {
+     FIREBASE_API_KEY: "${process.env.VERCEL_PUBLIC_FIREBASE_API_KEY}",
+     FIREBASE_AUTH_DOMAIN: "${process.env.VERCEL_PUBLIC_FIREBASE_AUTH_DOMAIN}",
+     FIREBASE_PROJECT_ID: "${process.env.VERCEL_PUBLIC_FIREBASE_PROJECT_ID}",
+     FIREBASE_STORAGE_BUCKET: "${process.env.VERCEL_PUBLIC_FIREBASE_STORAGE_BUCKET}",
+     FIREBASE_MESSAGING_SENDER_ID: "${process.env.VERCEL_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}",
+     FIREBASE_APP_ID: "${process.env.VERCEL_PUBLIC_FIREBASE_APP_ID}",
+     FIREBASE_MEASUREMENT_ID: "${process.env.VERCEL_PUBLIC_FIREBASE_MEASUREMENT_ID}",
+     GOOGLE_OAUTH_CLIENT_ID: "${process.env.VERCEL_PUBLIC_GOOGLE_OAUTH_CLIENT_ID}"
+   };
+   `;
+   
+   fs.writeFileSync('public/env.js', envContent);
+   console.log('env.js generated successfully');
+   ```
+
+4. Update package.json to run before build:
+   ```json
+   {
+     "scripts": {
+       "prebuild": "node generate-env.js",
+       "build": "echo 'Build complete'"
+     }
+   }
+   ```
+
+5. For local development, create public/env.js manually:
+   ```javascript
+   window.__ENV__ = {
+     FIREBASE_API_KEY: "your-api-key",
+     FIREBASE_AUTH_DOMAIN: "your-project.firebaseapp.com",
+     FIREBASE_PROJECT_ID: "your-project-id",
+     FIREBASE_STORAGE_BUCKET: "your-project.appspot.com",
+     FIREBASE_MESSAGING_SENDER_ID: "123456789",
+     FIREBASE_APP_ID: "1:123456789:web:abcdef",
+     FIREBASE_MEASUREMENT_ID: "G-XXXXXXXXXX",
+     GOOGLE_OAUTH_CLIENT_ID: "xxxxx.apps.googleusercontent.com"
+   };
+   ```
+
+🔥 FIREBASE CONFIGURATION:
+
+1. Go to Firebase Console (https://console.firebase.google.com)
+2. Create a new project or select existing
+3. Enable Firestore: Firestore Database > Create database > Start in production mode
+4. Enable Authentication: Authentication > Sign-in method > Enable Google
+5. Get your config: Project Settings > General > Your apps > Copy config values
+
+🔐 GOOGLE OAUTH CLIENT ID:
+
+1. Go to Google Cloud Console (https://console.cloud.google.com)
+2. Select your Firebase project
+3. APIs & Services > Credentials > Create OAuth 2.0 Client ID
+4. Application type: Web application
+5. Add authorized JavaScript origins:
+   - http://localhost:8000 (for local testing)
+   - https://your-vercel-domain.vercel.app
+6. Add authorized redirect URIs:
+   - https://your-project-id.firebaseapp.com/__/auth/handler
+7. Copy the Client ID
+
+🔒 FIRESTORE SECURITY RULES (CRITICAL):
+
+Go to Firestore Database > Rules and paste:
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId}/counters/{counterId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    match /users/{userId}/profile/{document} {
+      allow write: if request.auth != null && request.auth.uid == userId;
+      allow read: if (request.auth != null && request.auth.uid == userId)
+                  || (get(/databases/$(database)/documents/users/$(userId)/profile/data).data.profilePublic == true);
+    }
+  }
+}
+
+Click "Publish" to save.
+
+🚀 DEPLOYMENT:
+
+1. Push code to GitHub
+2. Import to Vercel
+3. Add environment variables in Vercel settings
+4. Deploy
+
+✨ FEATURES:
+   • Google Sign-In + One-Tap automatic sign-in
+   • Profile dropdown with View Profile and Logout
+   • Personalized counters per user (Firestore storage)
+   • Transactional updates: counter increments update profile's highestNaamJaapCount
+   • Real-time persistence with optimistic UI updates
+   • Offline-resilient with error handling and rollback
+   • No duplicate deity names (case-insensitive validation)
+   • Clean, modern, mobile-responsive UI
+   • Keyboard accessible
+   • Secure per-user data isolation
+
+═══════════════════════════════════════════════════════════════════════════════
+-->
